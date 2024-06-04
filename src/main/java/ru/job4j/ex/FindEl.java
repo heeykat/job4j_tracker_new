@@ -17,11 +17,12 @@ public class FindEl {
 
     public static void main(String[] args) {
         String[] arr = new String[] {"one, two, tree, four"};
-//        try {
-//            indexOf(arr, "five");
-//        } catch (ElementNotFoundException e) {
-//            e.printStackTrace();
-//        }
+/*        try {
+            indexOf(arr, "five");
+        } catch (ElementNotFoundException e) {
+            e.printStackTrace();
+        }
+ */
         try {
             indexOf(arr, "five");
         } catch (ElementNotFoundException e) {
