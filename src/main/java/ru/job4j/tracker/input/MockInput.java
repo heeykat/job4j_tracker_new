@@ -1,16 +1,17 @@
 package ru.job4j.tracker.input;
 
-public class MockInput implements Input {
-    private String[] answers;
-    private int position = 0;
+import java.util.List;
 
-    public MockInput(String[] answers) {
+public class MockInput implements Input {
+    private List<String> answers;
+
+    public MockInput(List<String> answers) {
         this.answers = answers;
     }
 
     @Override
     public String askStr(String question) {
-        return answers[position++];
+        return answers.remove(0);
     }
 
     @Override

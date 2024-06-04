@@ -8,6 +8,10 @@ import ru.job4j.tracker.input.ValidateInput;
 import ru.job4j.tracker.output.Output;
 import ru.job4j.tracker.output.StubOutput;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class StartUITest {
@@ -18,12 +22,12 @@ class StartUITest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test"));
         Input input = new MockInput(
-                new String[] {"0", "test", "1"}
+                new ArrayList<>(Arrays.asList("0", "test", "1"))
         );
-        UserAction[] actions = new UserAction[]{
+        List<UserAction> actions = Arrays.asList(
                 new FindByNameAction(output),
                 new ExitAction(output)
-        };
+        );
         new StartUI(output).init(input, tracker, actions);
         String ln = System.lineSeparator();
         String info = item.toString();
@@ -46,12 +50,12 @@ class StartUITest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test"));
         Input input = new MockInput(
-                new String[] {"0", String.valueOf(item.getId()), "1"}
+                new ArrayList<>(Arrays.asList("0", String.valueOf(item.getId()), "1"))
         );
-        UserAction[] actions = new UserAction[]{
+        List<UserAction> actions = Arrays.asList(
                 new FindByIdAction(output),
                 new ExitAction(output)
-        };
+        );
         new StartUI(output).init(input, tracker, actions);
         String ln = System.lineSeparator();
         String info = item.toString();
@@ -74,12 +78,12 @@ class StartUITest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("Deleted item")); /* Добавляется в tracker новая заявка */
         Input input = new MockInput(
-                new String[]{"0", String.valueOf(item.getId()), "1"}
+                new ArrayList<>(Arrays.asList("0", String.valueOf(item.getId()), "1"))
         );
-        UserAction[] actions = {
+        List<UserAction> actions = Arrays.asList(
                 new DeleteAction(output),
                 new ExitAction(output)
-        };
+        );
         new StartUI(output).init(input, tracker, actions);
         assertThat(tracker.findById(item.getId())).isNull();
     }
@@ -91,12 +95,12 @@ class StartUITest {
         Item item = tracker.add(new Item("test"));
         String replaceName = "New Test Name";
         Input input = new MockInput(
-                new String[] {"0", String.valueOf(item.getId()), replaceName, "1"}
+                new ArrayList<>(Arrays.asList("0", String.valueOf(item.getId()), replaceName, "1"))
         );
-        UserAction[] actions = new UserAction[]{
+        List<UserAction> actions = Arrays.asList(
                 new ReplaceAction(output),
                 new ExitAction(output)
-        };
+        );
         new StartUI(output).init(input, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(output.toString()).isEqualTo(
@@ -118,12 +122,12 @@ class StartUITest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test"));
         Input input = new MockInput(
-                new String[] {"0", "1"}
+                new ArrayList<>(Arrays.asList("0", "1"))
         );
-        UserAction[] actions = new UserAction[]{
+        List<UserAction> actions = Arrays.asList(
                 new FindAllAction(output),
                 new ExitAction(output)
-        };
+        );
         new StartUI(output).init(input, tracker, actions);
         String ln = System.lineSeparator();
         String info = item.toString();
@@ -144,27 +148,27 @@ class StartUITest {
     void whenCreateItem() {
         Output output = new StubOutput();
         Input input = new MockInput(
-                new String[]{"0", "Item name", "1"}
+                new ArrayList<>(Arrays.asList("0", "Item name", "1"))
         );
         Tracker tracker = new Tracker();
-        UserAction[] actions = {
+        List<UserAction> actions = Arrays.asList(
                 new CreateAction(output),
                 new ExitAction(output)
-        };
+        );
         new StartUI(output).init(input, tracker, actions);
-        assertThat(tracker.findAll()[0].getName()).isEqualTo("Item name");
+        assertThat(tracker.findAll().get(0).getName()).isEqualTo("Item name");
     }
 
     @Test
     void whenExit() {
         Output output = new StubOutput();
         Input input = new MockInput(
-                new String[] {"0"}
+                new ArrayList<>(Arrays.asList("0"))
         );
         Tracker tracker = new Tracker();
-        UserAction[] actions = {
+        List<UserAction> actions = Arrays.asList(
                 new ExitAction(output)
-        };
+        );
         new StartUI(output).init(input, tracker, actions);
         assertThat(output.toString()).isEqualTo(
                 "Menu:" + System.lineSeparator()
@@ -177,12 +181,12 @@ class StartUITest {
     void whenInvalidExit() {
         Output output = new StubOutput();
         Input input = new MockInput(
-                new String[] {"1", "0"}
+                new ArrayList<>(Arrays.asList("1", "0"))
         );
         Tracker tracker = new Tracker();
-        UserAction[] actions = new UserAction[]{
+        List<UserAction> actions = Arrays.asList(
                 new ExitAction(output)
-        };
+        );
         new StartUI(output).init(input, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(output.toString()).isEqualTo(
@@ -200,12 +204,12 @@ class StartUITest {
         Output output = new StubOutput();
         Input input = new ValidateInput(output,
                 new MockInput(
-                    new String[] {"abc", "0"})
+                        new ArrayList<>(Arrays.asList("abc", "0")))
         );
         Tracker tracker = new Tracker();
-        UserAction[] actions = new UserAction[]{
+        List<UserAction> actions = Arrays.asList(
                 new ExitAction(output)
-        };
+        );
         new StartUI(output).init(input, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(output.toString()).isEqualTo(
@@ -221,12 +225,12 @@ class StartUITest {
         Output output = new StubOutput();
         Input input = new ValidateInput(output,
                 new MockInput(
-                        new String[]{"0"})
+                        new ArrayList<>(Arrays.asList("0")))
         );
         Tracker tracker = new Tracker();
-        UserAction[] actions = new UserAction[]{
+        List<UserAction> actions = Arrays.asList(
                 new ExitAction(output)
-        };
+        );
         new StartUI(output).init(input, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(output.toString()).isEqualTo(
@@ -240,7 +244,7 @@ class StartUITest {
     void whenInvalidValidateInput() {
         Output output = new StubOutput();
         Input in = new MockInput(
-                new String[] {"one", "1"}
+                new ArrayList<>(Arrays.asList("one", "1"))
         );
         ValidateInput input = new ValidateInput(output, in);
         int selected = input.askInt("Enter menu:");
@@ -251,7 +255,7 @@ class StartUITest {
     void whenValidValidateInput() {
         Output output = new StubOutput();
         Input in = new MockInput(
-                new String[] {"1"}
+                new ArrayList<>(Arrays.asList("1"))
         );
         ValidateInput input = new ValidateInput(output, in);
         int selected = input.askInt("Enter menu:");
@@ -262,7 +266,7 @@ class StartUITest {
     void whenValidValidateInputNegativeNumber() {
         Output output = new StubOutput();
         Input in = new MockInput(
-                new String[] {"-4"}
+                new ArrayList<>(Arrays.asList("-4"))
         );
         ValidateInput input = new ValidateInput(output, in);
         int selected = input.askInt("Enter menu:");
@@ -273,7 +277,7 @@ class StartUITest {
     void whenValidValidateInputMultiple() {
         Output output = new StubOutput();
         Input in = new MockInput(
-                new String[] {"1", "2", "3"}
+                new ArrayList<>(Arrays.asList("1", "2", "3"))
         );
         ValidateInput input = new ValidateInput(output, in);
         int selected = input.askInt("Enter menu:");
