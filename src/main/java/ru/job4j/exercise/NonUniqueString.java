@@ -7,7 +7,7 @@ public class NonUniqueString {
     public static Map<String, Boolean> checkData(String[] strings) {
         Map<String, Boolean> map = new HashMap<>();
         for (String st : strings) {
-//            map.compute(st, (key, value) -> value != null);
+/*            map.compute(st, (key, value) -> value != null);  */
             map.merge(st, false, (el1, el2) -> true);
         }
         return map;
