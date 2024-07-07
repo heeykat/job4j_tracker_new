@@ -22,8 +22,6 @@ class ItemAscByNameTest {
             add(new Item(2, "Cbc"));
         }};
         Collections.sort(listActual, new ItemAscByName());
-        for (int i = 0; i < listActual.size(); i++) {
-            assertEquals(listExpected.get(i).getName(), listActual.get(i).getName());
-        }
+        assertEquals(listActual, listExpected);
     }
 }

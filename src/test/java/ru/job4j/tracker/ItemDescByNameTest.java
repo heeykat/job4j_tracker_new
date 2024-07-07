@@ -22,8 +22,6 @@ class ItemDescByNameTest {
             add(new Item(1, "Abc"));
         }};
         Collections.sort(listActual, new ItemDescByName());
-        for (int i = 0; i < listActual.size(); i++) {
-            assertEquals(listExpected.get(i).getName(), listActual.get(i).getName());
-        }
+        assertEquals(listActual, listExpected);
     }
 }
