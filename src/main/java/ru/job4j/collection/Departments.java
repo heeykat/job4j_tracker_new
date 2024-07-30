@@ -8,14 +8,9 @@ public class Departments {
         for (String value : departments) {
             StringBuilder start = new StringBuilder();
             String[] str = value.split("/");
-            for (int i = 0; i < str.length; i++) {
-                if (i == 0) {
-                    start.append(str[i]);
-                    temp.add(start.toString());
-                } else {
-                    temp.add(start + "/" + str[i]);
-                    start.append("/").append(str[i]);
-                }
+            for (String element : str) {
+                start.append(start.isEmpty() ? element : "/" + element);
+                temp.add(start.isEmpty() ? element : start.toString());
             }
         }
         return new ArrayList<>(temp);
