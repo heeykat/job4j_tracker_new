@@ -12,6 +12,7 @@ public class PhoneDictionary {
 
     /**
      * Вернуть список всех пользователей, который содержат key в любых полях.
+     *
      * @param key Ключ поиска.
      * @return Список пользователей, которые прошли проверку.
      */
@@ -20,7 +21,7 @@ public class PhoneDictionary {
         Predicate<Person> checkSurname = (person) -> person.getSurname().contains(key);
         Predicate<Person> checkPhone = (person) -> person.getPhone().contains(key);
         Predicate<Person> checkAddress = (person) -> person.getPhone().contains(key);
-        Predicate<Person> combine = (person) -> checkName.or(checkSurname).or(checkPhone).or(checkAddress).test(person);
+        Predicate<Person> combine = checkName.or(checkSurname).or(checkPhone).or(checkAddress);
         ArrayList<Person> result = new ArrayList<>();
         for (Person person : persons) {
             if (combine.test(person)) {
