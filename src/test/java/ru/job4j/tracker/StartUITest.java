@@ -19,8 +19,8 @@ class StartUITest {
     @Test
     void whenFindItemByNameItem() {
         Output output = new StubOutput();
-        Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item("test"));
+        MemTracker memTracker = new MemTracker();
+        Item item = memTracker.add(new Item("test"));
         Input input = new MockInput(
                 new ArrayList<>(Arrays.asList("0", "test", "1"))
         );
@@ -28,7 +28,7 @@ class StartUITest {
                 new FindByNameAction(output),
                 new ExitAction(output)
         );
-        new StartUI(output).init(input, tracker, actions);
+        new StartUI(output).init(input, memTracker, actions);
         String ln = System.lineSeparator();
         String info = item.toString();
         assertThat(output.toString()).isEqualTo(
@@ -47,8 +47,8 @@ class StartUITest {
     @Test
     void findItemById() {
         Output output = new StubOutput();
-        Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item("test"));
+        MemTracker memTracker = new MemTracker();
+        Item item = memTracker.add(new Item("test"));
         Input input = new MockInput(
                 new ArrayList<>(Arrays.asList("0", String.valueOf(item.getId()), "1"))
         );
@@ -56,7 +56,7 @@ class StartUITest {
                 new FindByIdAction(output),
                 new ExitAction(output)
         );
-        new StartUI(output).init(input, tracker, actions);
+        new StartUI(output).init(input, memTracker, actions);
         String ln = System.lineSeparator();
         String info = item.toString();
         assertThat(output.toString()).isEqualTo(
@@ -75,8 +75,8 @@ class StartUITest {
     @Test
     void whenDeleteItem() {
         Output output = new StubOutput();
-        Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item("Deleted item")); /* Добавляется в tracker новая заявка */
+        MemTracker memTracker = new MemTracker();
+        Item item = memTracker.add(new Item("Deleted item")); /* Добавляется в tracker новая заявка */
         Input input = new MockInput(
                 new ArrayList<>(Arrays.asList("0", String.valueOf(item.getId()), "1"))
         );
@@ -84,15 +84,15 @@ class StartUITest {
                 new DeleteAction(output),
                 new ExitAction(output)
         );
-        new StartUI(output).init(input, tracker, actions);
-        assertThat(tracker.findById(item.getId())).isNull();
+        new StartUI(output).init(input, memTracker, actions);
+        assertThat(memTracker.findById(item.getId())).isNull();
     }
 
     @Test
     void whenReplaceItemTestOutputIsSuccessfully() {
         Output output = new StubOutput();
-        Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item("test"));
+        MemTracker memTracker = new MemTracker();
+        Item item = memTracker.add(new Item("test"));
         String replaceName = "New Test Name";
         Input input = new MockInput(
                 new ArrayList<>(Arrays.asList("0", String.valueOf(item.getId()), replaceName, "1"))
@@ -101,7 +101,7 @@ class StartUITest {
                 new ReplaceAction(output),
                 new ExitAction(output)
         );
-        new StartUI(output).init(input, tracker, actions);
+        new StartUI(output).init(input, memTracker, actions);
         String ln = System.lineSeparator();
         assertThat(output.toString()).isEqualTo(
                 "Menu:" + ln
@@ -119,8 +119,8 @@ class StartUITest {
     @Test
     void whenFindAllItems() {
         Output output = new StubOutput();
-        Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item("test"));
+        MemTracker memTracker = new MemTracker();
+        Item item = memTracker.add(new Item("test"));
         Input input = new MockInput(
                 new ArrayList<>(Arrays.asList("0", "1"))
         );
@@ -128,7 +128,7 @@ class StartUITest {
                 new FindAllAction(output),
                 new ExitAction(output)
         );
-        new StartUI(output).init(input, tracker, actions);
+        new StartUI(output).init(input, memTracker, actions);
         String ln = System.lineSeparator();
         String info = item.toString();
         assertThat(output.toString()).isEqualTo(
@@ -150,13 +150,13 @@ class StartUITest {
         Input input = new MockInput(
                 new ArrayList<>(Arrays.asList("0", "Item name", "1"))
         );
-        Tracker tracker = new Tracker();
+        MemTracker memTracker = new MemTracker();
         List<UserAction> actions = Arrays.asList(
                 new CreateAction(output),
                 new ExitAction(output)
         );
-        new StartUI(output).init(input, tracker, actions);
-        assertThat(tracker.findAll().get(0).getName()).isEqualTo("Item name");
+        new StartUI(output).init(input, memTracker, actions);
+        assertThat(memTracker.findAll().get(0).getName()).isEqualTo("Item name");
     }
 
     @Test
@@ -165,11 +165,11 @@ class StartUITest {
         Input input = new MockInput(
                 new ArrayList<>(Arrays.asList("0"))
         );
-        Tracker tracker = new Tracker();
+        MemTracker memTracker = new MemTracker();
         List<UserAction> actions = Arrays.asList(
                 new ExitAction(output)
         );
-        new StartUI(output).init(input, tracker, actions);
+        new StartUI(output).init(input, memTracker, actions);
         assertThat(output.toString()).isEqualTo(
                 "Menu:" + System.lineSeparator()
                         + "0. Finish the program" + System.lineSeparator()
@@ -183,11 +183,11 @@ class StartUITest {
         Input input = new MockInput(
                 new ArrayList<>(Arrays.asList("1", "0"))
         );
-        Tracker tracker = new Tracker();
+        MemTracker memTracker = new MemTracker();
         List<UserAction> actions = Arrays.asList(
                 new ExitAction(output)
         );
-        new StartUI(output).init(input, tracker, actions);
+        new StartUI(output).init(input, memTracker, actions);
         String ln = System.lineSeparator();
         assertThat(output.toString()).isEqualTo(
                 "Menu:" + ln
@@ -206,11 +206,11 @@ class StartUITest {
                 new MockInput(
                         new ArrayList<>(Arrays.asList("abc", "0")))
         );
-        Tracker tracker = new Tracker();
+        MemTracker memTracker = new MemTracker();
         List<UserAction> actions = Arrays.asList(
                 new ExitAction(output)
         );
-        new StartUI(output).init(input, tracker, actions);
+        new StartUI(output).init(input, memTracker, actions);
         String ln = System.lineSeparator();
         assertThat(output.toString()).isEqualTo(
                 "Menu:" + ln
@@ -227,11 +227,11 @@ class StartUITest {
                 new MockInput(
                         new ArrayList<>(Arrays.asList("0")))
         );
-        Tracker tracker = new Tracker();
+        MemTracker memTracker = new MemTracker();
         List<UserAction> actions = Arrays.asList(
                 new ExitAction(output)
         );
-        new StartUI(output).init(input, tracker, actions);
+        new StartUI(output).init(input, memTracker, actions);
         String ln = System.lineSeparator();
         assertThat(output.toString()).isEqualTo(
                 "Menu:" + ln
