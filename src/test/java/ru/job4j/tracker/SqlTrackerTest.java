@@ -98,6 +98,18 @@ public class SqlTrackerTest {
     }
 
     @Test
+    public void whenDeleteItemThenTableShouldNotBeDeleted() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item item1 = new Item("item1");
+        Item item2 = new Item("item2");
+        List<Item> list = List.of(item2);
+        tracker.add(item1);
+        tracker.add(item2);
+        tracker.delete(item1.getId());
+        assertThat(tracker.findAll()).isEqualTo(list);
+    }
+
+    @Test
     public void whenReplaceItemIsSuccessful() {
         SqlTracker tracker = new SqlTracker(connection);
         Item item1 = new Item("item1");
