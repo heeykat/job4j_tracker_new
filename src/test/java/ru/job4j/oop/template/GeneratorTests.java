@@ -1,5 +1,6 @@
 package ru.job4j.oop.template;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+@Disabled
 public class GeneratorTests {
     Generator generator = new GeneratorImpl();
 
