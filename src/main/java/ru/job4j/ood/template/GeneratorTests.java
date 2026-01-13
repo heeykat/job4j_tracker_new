@@ -1,12 +1,10 @@
-package ru.job4j.oop.template;
+package ru.job4j.ood.template;
 
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @Disabled
 public class GeneratorTests {
@@ -21,7 +19,7 @@ public class GeneratorTests {
         );
 
         String result = generator.produce(template, args);
-        assertThat(result).isEqualTo("I am a Petr Arsentev, Who are you?");
+        AssertionsForClassTypes.assertThat(result).isEqualTo("I am a Petr Arsentev, Who are you?");
     }
 
     @Test
@@ -31,7 +29,7 @@ public class GeneratorTests {
                 "name", "Petr Arsentev"
         );
         String result = generator.produce(template, args);
-        assertThatThrownBy(() -> generator.produce(template, args))
+        AssertionsForClassTypes.assertThatThrownBy(() -> generator.produce(template, args))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -44,7 +42,7 @@ public class GeneratorTests {
                 "extra", "value"
         );
         String result = generator.produce(template, args);
-        assertThatThrownBy(() -> generator.produce(template, args))
+        AssertionsForClassTypes.assertThatThrownBy(() -> generator.produce(template, args))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -53,7 +51,7 @@ public class GeneratorTests {
         String template = "I am a ${name}, Who are ${subject}?";
         Map<String, String> args = Map.of();
         String result = generator.produce(template, args);
-        assertThatThrownBy(() -> generator.produce(template, args))
+        AssertionsForClassTypes.assertThatThrownBy(() -> generator.produce(template, args))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

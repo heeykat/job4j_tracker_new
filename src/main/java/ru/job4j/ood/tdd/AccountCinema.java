@@ -1,4 +1,4 @@
-package ru.job4j.oop.tdd;
+package ru.job4j.ood.tdd;
 
 public class AccountCinema implements Account {
 }

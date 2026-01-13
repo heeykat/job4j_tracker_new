@@ -1,9 +1,8 @@
-package ru.job4j.oop.tdd;
+package ru.job4j.ood.tdd;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
 
 import java.util.Calendar;
 import java.util.List;
@@ -16,7 +15,7 @@ public class Cinema3DTest {
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
         Ticket ticket = cinema.buy(account, 1, 1, date);
-        assertThat(ticket).isEqualTo(new Ticket3D());
+        Assertions.assertThat(ticket).isEqualTo(new Ticket3D());
     }
 
     @Test
@@ -25,7 +24,7 @@ public class Cinema3DTest {
         Session session = new Session3D();
         cinema.add(session);
         List<Session> sessions = cinema.find(data -> true);
-        assertThat(sessions).contains(session);
+        Assertions.assertThat(sessions).contains(session);
     }
 
     @Test
@@ -33,7 +32,7 @@ public class Cinema3DTest {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
-        assertThatThrownBy(() -> cinema.buy(account, -1, 1, date))
+        Assertions.assertThatThrownBy(() -> cinema.buy(account, -1, 1, date))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -41,7 +40,7 @@ public class Cinema3DTest {
     public void whenNoSessionsThenFindReturnsEmptyList() {
         Cinema cinema = new Cinema3D();
         List<Session> sessions = cinema.find(s -> true);
-        assertThat(sessions).isEmpty();
+        Assertions.assertThat(sessions).isEmpty();
     }
 
     @Test
@@ -53,7 +52,7 @@ public class Cinema3DTest {
 
         cinema.buy(account1, 1, 1, date);
 
-        assertThatThrownBy(() -> cinema.buy(account2, 1, 1, date))
+        Assertions.assertThatThrownBy(() -> cinema.buy(account2, 1, 1, date))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("seat is already taken");
     }
@@ -68,6 +67,6 @@ public class Cinema3DTest {
         cinema.add(session2);
 
         List<Session> sessions = cinema.find(s -> true);
-        assertThat(sessions).containsExactly(session1, session2);
+        Assertions.assertThat(sessions).containsExactly(session1, session2);
     }
 }
